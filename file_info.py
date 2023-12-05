@@ -23,14 +23,17 @@ class folder:
         self.time = os.path.getmtime(folder)
         self.author = os.stat(folder).st_uid
         self.level = level
-        #self.files_number = len(folder)
+        self.files_number = 0
         self.size = self.get_size(folder)
         self.procent = get_procent(self.size)
 
     def get_size(self, folder_path):
-        size = 0
-        for ele in os.scandir(folder_path):
-            size += os.path.getsize(ele)
-        return size
-        # self.is_file = False
-        # self.is_folder = False
+        try:
+            size = 0
+            for ele in os.scandir(folder_path):
+                size += os.path.getsize(ele)
+            return size
+            # self.is_file = False
+            # self.is_folder = False
+        except PermissionError:
+            return -5
