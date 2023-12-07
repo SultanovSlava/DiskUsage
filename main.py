@@ -1,6 +1,9 @@
 import os
 import files_walking
-import output
+import output, filter
+import calendar
+import time
+date = '+' + str(calendar.timegm(time.strptime('Jul 9, 2009 @ 00:00:00 UTC', '%b %d, %Y @ %H:%M:%S UTC')))
 path = r'C:\Users\sulta\OneDrive\Документы\READy'
 files_and_dirs = os.listdir(path)
 # level = 3#int(input())
@@ -10,6 +13,7 @@ files_and_dirs = os.listdir(path)
 w = files_walking.files_walking()
 w.walking(r'C:\Users\sulta\OneDrive\Документы')
 level_files_and_dirs = w.level_files_and_dirs[path]
-print('!')
-output.output(level_files_and_dirs)
+f = filter.filter(level_files_and_dirs)
+output.output(f.set_filter(date=date).values())
+#output.output(level_files_and_dirs)
 

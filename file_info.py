@@ -5,28 +5,6 @@ def get_procent(size):
     return size / shutil.disk_usage("/").total * 100
 
 class my_file:
-    def __init__(self, file, level):
-        self.name = file.split("\\")[-1]
-        self.time = os.path.getmtime(file)
-        self.author = os.stat(file).st_uid
-        self.level = level
-        self.extension = file.split('.')[-1]
-        self.size = os.path.getsize(file)
-        self.procent = get_procent(self.size)
-        # self.is_file = False
-        # self.is_folder = False
-
-
-class folder:
-    def __init__(self, folder, level):
-        self.name = folder.split("\\")[-1]
-        self.time = os.path.getmtime(folder)
-        self.author = os.stat(folder).st_uid
-        self.level = level
-        self.files_number = 0
-        self.size = self.get_size(folder)
-        self.procent = get_procent(self.size)
-
     def get_size(self, folder_path):
         try:
             size = 0
@@ -37,3 +15,20 @@ class folder:
             # self.is_folder = False
         except PermissionError:
             return -5
+
+    def __init__(self, file, level):
+        self.name = file.split("\\")[-1]
+        self.path = file
+        self.time = os.path.getctime(file)
+        self.author = os.stat(file).st_uid
+        self.level = level
+        self.files_number = 0
+        if os.path.isfile(file):
+            self.extension = file.split('.')[-1]
+            self.size = os.path.getsize(file)
+        else:
+            self.size = self.get_size(file)
+            self.extension = 'folder'
+        self.procent = get_procent(self.size)
+
+
