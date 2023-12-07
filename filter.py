@@ -4,8 +4,11 @@ import queue
 
 class filter:
     def __init__(self, catalog):
-        self.cur_catalog = catalog
-        self.catalog = catalog
+        dict_of_catalog = dict()
+        for el in catalog:
+            dict_of_catalog[el.path] = el
+        self.cur_catalog = dict_of_catalog
+        self.catalog = dict_of_catalog
         self.author_filter = False
         self.extension_filter = False
         self.date_filter = False
@@ -58,7 +61,8 @@ class filter:
         filt_result = dict()
         filt_type = self.date_filter[0]
 
-        for el in self.cur_catalog:
+        for path in self.cur_catalog:
+            el = self.cur_catalog[path]
             if filt_type == '+' and el.time >= int(self.date_filter[1:]):
                 filt_result[el.path] = el
             elif filt_type == '-' and el.time < int(self.date_filter[1:]):
