@@ -34,6 +34,7 @@ class filter:
             self.filt_by_extension()
         if size is not None:
             self.size_filter = size
+            self.filt_by_size()
 
         return self.cur_catalog
 
@@ -85,6 +86,22 @@ class filter:
 
         self.cur_catalog = filt_result
 
+
+    def filt_by_size(self):
+        filt_result = dict()
+        filt_type = self.size_filter[0]
+
+        for path in self.cur_catalog:
+            el = self.cur_catalog[path]
+            #print(el.size, int(self.size_filter[1:]))
+            if filt_type == '+' and el.size >= int(self.size_filter[1:]):
+                filt_result[el.path] = el
+            elif filt_type == '-' and el.size < int(self.size_filter[1:]):
+                filt_result[el.path] = el
+            elif filt_type == '=' and el.size == int(self.size_filter[1:]):
+                filt_result[el.path] = el
+
+        self.cur_catalog = filt_result
     # def filt_by_level(self):
     #   filt_result = dict()
     #  catalogs_by_levels = queue.Queue(self.cur_catalog)
