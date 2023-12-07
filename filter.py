@@ -9,19 +9,23 @@ class filter:
             dict_of_catalog[el.path] = el
         self.cur_catalog = dict_of_catalog
         self.catalog = dict_of_catalog
-        self.author_filter = False
-        self.extension_filter = False
-        self.date_filter = False
-        self.size_filter = False
-        self.level_filter = False
+        self.author_filter = None
+        self.extension_filter = None
+        self.date_filter = None
+        self.size_filter = None
+        self.level_filter = None
+        self.files_number_filter = None
 
-    def set_filter(self, author=None, extension=None, date=None, size=None, level=None):
+    def set_filter(self, author=None, extension=None, date=None, size=None, level=None, files_number=None):
         if level is not None:
             self.level_filter = level
             # self.filt_by_level()
         if date is not None:
             self.date_filter = date
             self.filt_by_date()
+        if files_number is not None:
+            self.files_number = files_number
+            self.filt_by_files_number()
         if author is not None:
             self.author_filter = author
             self.filt_by_author()
@@ -48,6 +52,15 @@ class filter:
                 if self.cur_catalog[el].extension == extension:
                     filt_result[el] = self.cur_catalog[el]
         self.cur_catalog = filt_result
+
+
+    def filt_by_files_number(self):
+        filt_result = dict()
+        for el in self.cur_catalog:
+            if self.cur_catalog[el].files_number == self.files_number:
+                filt_result[el] = self.cur_catalog[el]
+        self.cur_catalog = filt_result
+
 
     def filt_by_author(self):
         filt_result = dict()
