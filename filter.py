@@ -19,7 +19,7 @@ class filter:
     def set_filter(self, author=None, extension=None, date=None, size=None, level=None, files_number=None):
         if level is not None:
             self.level_filter = level
-            # self.filt_by_level()
+            self.filt_by_level()
         if date is not None:
             self.date_filter = date
             self.filt_by_date()
@@ -93,7 +93,6 @@ class filter:
 
         for path in self.cur_catalog:
             el = self.cur_catalog[path]
-            #print(el.size, int(self.size_filter[1:]))
             if filt_type == '+' and el.size >= int(self.size_filter[1:]):
                 filt_result[el.path] = el
             elif filt_type == '-' and el.size < int(self.size_filter[1:]):
@@ -102,11 +101,18 @@ class filter:
                 filt_result[el.path] = el
 
         self.cur_catalog = filt_result
-    # def filt_by_level(self):
-    #   filt_result = dict()
-    #  catalogs_by_levels = queue.Queue(self.cur_catalog)
-    #
-    # while catalogs_by_levels
-    #       .level != self.level_filter - 1:
-    #      filt_result[el] = self.catalog[el]
-    # self.cur_catalog = filt_result
+
+    def filt_by_level(self):
+        filt_result = dict()
+        filt_type = self.level_filter[0]
+
+        for path in self.cur_catalog:
+            el = self.cur_catalog[path]
+            if filt_type == '+' and el.level >= int(self.level_filter[1:]):
+                filt_result[el.path] = el
+            elif filt_type == '-' and el.level < int(self.level_filter[1:]):
+                filt_result[el.path] = el
+            elif filt_type == '=' and el.level == int(self.level_filter[1:]):
+                filt_result[el.path] = el
+
+        self.cur_catalog = filt_result

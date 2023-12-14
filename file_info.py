@@ -16,12 +16,12 @@ class my_file:
         except PermissionError:
             return -5
 
-    def __init__(self, file, level):
+    def __init__(self, file):
         self.name = file.split("\\")[-1]
         self.path = file
         self.time = os.path.getctime(file)
         self.author = os.stat(file).st_uid
-        self.level = level
+        self.level = 0
         self.files_number = 0
         if os.path.isfile(file):
             self.extension = file.split('.')[-1]

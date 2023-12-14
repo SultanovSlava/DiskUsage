@@ -8,24 +8,26 @@ class files_walking:
     def walking(self, path):
         self.level_files_and_dirs[path] = []
         self.cur_level += 1
+        cur_level = 0
+        level = 0
         try:
             files_number = 0
             files_and_dirs = os.listdir(path)
-            for f in files_and_dirs:  # [f for f in files_and_dirs if os.path.isfile(f)]:
-
-                file = file_info.my_file(os.path.join(path, f), self.cur_level - 1)
-                # print(file.name)
+            for f in files_and_dirs:
+                file = file_info.my_file(os.path.join(path, f))
                 self.level_files_and_dirs[path].append(file)
-                # print(file.size)
 
                 if os.path.isfile(os.path.join(path, f)):
                     files_number += 1
+                    self.cur_level = 0
                 else:
-                    file.files_number += self.walking(os.path.join(path, f))
+                    prev_files_number, cur_level = self.walking(os.path.join(path, f))
+                    file.files_number += prev_files_number
                     files_number += file.files_number
-                    self.cur_level -= 1
-
-            return files_number
+                    cur_level += 1
+                    file.level = max(cur_level, file.level)
+                level = max(level, cur_level)
+            return files_number, level
         except PermissionError as e:
             print(f"Error: {e} in {path}. It was ignored")
             self.level_files_and_dirs[path] = f"Error: {e} in {path}. It was ignored"
