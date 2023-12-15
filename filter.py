@@ -1,5 +1,9 @@
-import file_info
-import queue
+from pprint import pp
+
+import pandas
+from pandas import DataFrame
+import itertools as it
+import operator as op
 
 
 class filter:
@@ -54,14 +58,12 @@ class filter:
                     filt_result[el] = self.cur_catalog[el]
         self.cur_catalog = filt_result
 
-
     def filt_by_files_number(self):
         filt_result = dict()
         for el in self.cur_catalog:
             if self.cur_catalog[el].files_number == self.files_number:
                 filt_result[el] = self.cur_catalog[el]
         self.cur_catalog = filt_result
-
 
     def filt_by_author(self):
         filt_result = dict()
@@ -85,7 +87,6 @@ class filter:
                 filt_result[el.path] = el
 
         self.cur_catalog = filt_result
-
 
     def filt_by_size(self):
         filt_result = dict()
@@ -116,3 +117,15 @@ class filter:
                 filt_result[el.path] = el
 
         self.cur_catalog = filt_result
+
+    def group_by(self, group_key):
+        catalog_sort_by_key = dict()
+        for el in self.cur_catalog.values():
+            catalog_sort_by_key[el] = getattr(el, group_key)
+        catalog_sort_by_key = sorted(catalog_sort_by_key.items(), key=lambda item: item[1])
+        group_catalog = dict(catalog_sort_by_key)
+        # print(group_catalog.values())
+        return group_catalog.keys()
+        # df_catalog = DataFrame(self.cur_catalog.values(), index=[])
+        # print(df_catalog.keys())
+        # return df_catalog.groupby(group_key)
