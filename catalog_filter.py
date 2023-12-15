@@ -1,13 +1,7 @@
-from pprint import pp
-
-import pandas
-from pandas import DataFrame
-import itertools as it
-import operator as op
 
 
-class filter:
-    def __init__(self, catalog):
+class catalog_filter:
+    def __init__(self, catalog=[]):
         dict_of_catalog = dict()
         for el in catalog:
             dict_of_catalog[el.path] = el
@@ -28,7 +22,7 @@ class filter:
             self.date_filter = date
             self.filt_by_date()
         if files_number is not None:
-            self.files_number = files_number
+            self.files_number_filter = files_number
             self.filt_by_files_number()
         if author is not None:
             self.author_filter = author
@@ -60,9 +54,16 @@ class filter:
 
     def filt_by_files_number(self):
         filt_result = dict()
-        for el in self.cur_catalog:
-            if self.cur_catalog[el].files_number == self.files_number:
-                filt_result[el] = self.cur_catalog[el]
+        filt_type = self.files_number_filter[0]
+
+        for path in self.cur_catalog:
+            el = self.cur_catalog[path]
+            if filt_type == '+' and el.files_number > int(self.files_number_filter[1:]):
+                filt_result[el.path] = el
+            elif filt_type == '-' and el.files_number < int(self.files_number_filter[1:]):
+                filt_result[el.path] = el
+            elif filt_type == '=' and el.files_number == int(self.files_number_filter[1:]):
+                filt_result[el.path] = el
         self.cur_catalog = filt_result
 
     def filt_by_author(self):
@@ -79,7 +80,7 @@ class filter:
 
         for path in self.cur_catalog:
             el = self.cur_catalog[path]
-            if filt_type == '+' and el.time >= int(self.date_filter[1:]):
+            if filt_type == '+' and el.time > int(self.date_filter[1:]):
                 filt_result[el.path] = el
             elif filt_type == '-' and el.time < int(self.date_filter[1:]):
                 filt_result[el.path] = el
@@ -94,7 +95,7 @@ class filter:
 
         for path in self.cur_catalog:
             el = self.cur_catalog[path]
-            if filt_type == '+' and el.size >= int(self.size_filter[1:]):
+            if filt_type == '+' and el.size > int(self.size_filter[1:]):
                 filt_result[el.path] = el
             elif filt_type == '-' and el.size < int(self.size_filter[1:]):
                 filt_result[el.path] = el
@@ -109,7 +110,7 @@ class filter:
 
         for path in self.cur_catalog:
             el = self.cur_catalog[path]
-            if filt_type == '+' and el.level >= int(self.level_filter[1:]):
+            if filt_type == '+' and el.level > int(self.level_filter[1:]):
                 filt_result[el.path] = el
             elif filt_type == '-' and el.level < int(self.level_filter[1:]):
                 filt_result[el.path] = el
@@ -126,6 +127,3 @@ class filter:
         group_catalog = dict(catalog_sort_by_key)
         # print(group_catalog.values())
         return group_catalog.keys()
-        # df_catalog = DataFrame(self.cur_catalog.values(), index=[])
-        # print(df_catalog.keys())
-        # return df_catalog.groupby(group_key)

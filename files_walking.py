@@ -1,6 +1,6 @@
 import os
 import file_info
-class files_walking:
+class files_detector:
     def __init__(self, level=0):
         self.cur_level = level
         self.level_files_and_dirs = dict()
