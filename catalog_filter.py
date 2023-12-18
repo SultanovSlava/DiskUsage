@@ -110,11 +110,11 @@ class catalog_filter:
 
         for path in self.cur_catalog:
             el = self.cur_catalog[path]
-            if filt_type == '+' and el.level > int(self.level_filter[1:]):
+            if filt_type == '+' and el.nesting_level > int(self.level_filter[1:]):
                 filt_result[el.path] = el
-            elif filt_type == '-' and el.level < int(self.level_filter[1:]):
+            elif filt_type == '-' and el.nesting_level < int(self.level_filter[1:]):
                 filt_result[el.path] = el
-            elif filt_type == '=' and el.level == int(self.level_filter[1:]):
+            elif filt_type == '=' and el.nesting_level == int(self.level_filter[1:]):
                 filt_result[el.path] = el
 
         self.cur_catalog = filt_result

@@ -21,7 +21,7 @@ class my_file:
         self.path = file
         self.time = os.path.getctime(file)
         self.author = os.stat(file).st_uid
-        self.level = 0
+        self.nesting_level = 0
         self.files_number = 0
         if os.path.isfile(file):
             self.extension = file.split('.')[-1]
