@@ -32,6 +32,7 @@ shell
 - `f reset` - сброс фильтра
 - `f key:value` - фильтрует директорию pathD. `Варианты ключей: author, extension, date, size, level, files_number`
 - `g key` - группирует директорию pathD.(Ключи те же)
+- `stop` - останавливает работу
 
 ## Авторы
 - [Султанов Вячеслав](https://github.com/SultanovSlava)
