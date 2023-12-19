@@ -30,7 +30,7 @@ shell
 - `w pathW` - проанализирует всем папки/файлы директории pathW. Пример: `w C:\Users\User\Doc`
 - `d pathD` - выдаст сводку директории path, которая находится среди проанализированных, т.е подкатолог pathW из предыдущей команды
 - `f reset` - сброс фильтра
-- `f key value` - фильтрует директорию pathD. `Варианты ключей: author, extension, date, size, level, files_number`
+- `f key:value` - фильтрует директорию pathD. `Варианты ключей: author, extension, date, size, level, files_number`
 - `g key` - группирует директорию pathD.(Ключи те же)
 
 ## Авторы
