@@ -1,20 +1,21 @@
-import shutil
 import os
 
-def get_procent(size):
-    return size / shutil.disk_usage("/").total * 100
 
-class my_file:
-    def get_size(self, folder_path):
+class MyFile:
+    def get_procent(self, mother_folder_size):
         try:
-            size = 0
-            for ele in os.scandir(folder_path):
-                size += os.path.getsize(ele)
-            return size
-            # self.is_file = False
-            # self.is_folder = False
-        except PermissionError:
-            return -5
+            return self.size / mother_folder_size * 100
+        except ZeroDivisionError:
+            return 100
+
+    def get_size(self, folder_path):
+        size = 0
+        for dirpath, dirnames, filenames in os.walk(folder_path):
+            for f in filenames:
+                file_path = os.path.join(dirpath, f)
+                if not os.path.islink(file_path):
+                    size += os.path.getsize(file_path)
+        return size
 
     def __init__(self, file):
         self.name = file.split("\\")[-1]
@@ -29,6 +30,4 @@ class my_file:
         else:
             self.size = self.get_size(file)
             self.extension = 'folder'
-        self.procent = get_procent(self.size)
-
-
+        self.procent = None

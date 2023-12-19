@@ -24,14 +24,20 @@ class command_line:
                 command_type = commands[0]
                 message = commands[1]
                 if command_type == 'w':
-                    self.files_detector.walking(message)
-                    self.directory = self.files_detector.level_files_and_dirs[message]
-                    print('w Ok')
+                    try:
+                        self.files_detector.walking(message)
+                        self.directory = self.files_detector.level_files_and_dirs[message]
+                        print('w Ok')
+                    except FileNotFoundError as e:
+                        print(e)
                 elif command_type == 'd':
-                    self.directory = self.files_detector.level_files_and_dirs[message]
-                    self.catalog_filter = catalog_filter(self.directory)
-                    self.outputer.output(self.directory)
-                    print('d Ok')
+                    try:
+                        self.directory = self.files_detector.level_files_and_dirs[message]
+                        self.catalog_filter = catalog_filter(self.directory)
+                        self.outputer.output(self.directory)
+                        print('d Ok')
+                    except KeyError as e:
+                        print('uncorrect directory path')
                 elif command_type == 'f':
                     if message == 'reset':
                         self.catalog_filter.reset_filter()
@@ -45,5 +51,5 @@ class command_line:
                     self.outputer.output(self.catalog_filter.group_by(message))
                 else:
                     print('Unknown command')
-            except Exception as e:
-                print(e)#'Incorrect command')
+            except Exception:
+                print('Incorrect command')

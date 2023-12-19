@@ -12,7 +12,7 @@ class files_detector:
 
     def walking(self, start_path):
         self.total_size = 0
-        for dirpath, dirnames, filenames in os.walk(start_path):
+        for dirpath in os.walk(start_path):
             self.total_size += 1
 
         return self.walking_to_get_info(start_path)
@@ -30,7 +30,7 @@ class files_detector:
             files_number = 0
             files_and_dirs = os.listdir(path)
             for f in files_and_dirs:
-                file = file_info.my_file(os.path.join(path, f))
+                file = file_info.MyFile(os.path.join(path, f))
                 self.level_files_and_dirs[path].append(file)
 
                 if os.path.isfile(os.path.join(path, f)):
@@ -42,6 +42,7 @@ class files_detector:
                     files_number += file.files_number
                     cur_level += 1
                     file.nesting_level = max(cur_level, file.nesting_level)
+
                 level = max(level, cur_level)
             bar()
             return files_number, level
