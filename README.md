@@ -18,7 +18,7 @@
    
 shell
 
-   git clone https://github.com/superguestgg/distributed_keyvalue_storage.git
+   git clone https://github.com/SultanovSlava/DiskUsage.git
 и установить все зависимости из `requirements.txt`
    
 2. Запустите хранилище, следуя инструкциям в файле README.md в корневом каталоге репозитория.
