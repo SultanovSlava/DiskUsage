@@ -47,7 +47,7 @@ class catalog_filter:
     def filt_by_extension(self):
         filt_result = dict()
         for el in self.cur_catalog:
-            for extension in self.extension_filter:
+            for extension in [self.extension_filter]:
                 if self.cur_catalog[el].extension == extension:
                     filt_result[el] = self.cur_catalog[el]
         self.cur_catalog = filt_result
@@ -69,7 +69,7 @@ class catalog_filter:
     def filt_by_author(self):
         filt_result = dict()
         for el in self.cur_catalog:
-            for author in self.author_filter:
+            for author in [self.author_filter]:
                 if self.cur_catalog[el].author == author:
                     filt_result[el] = self.cur_catalog[el]
         self.cur_catalog = filt_result
