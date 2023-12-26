@@ -3,8 +3,7 @@ import file_info
 from alive_progress import alive_bar
 
 
-
-class files_detector:
+class FilesDetector:
     def __init__(self, level=0):
         self.cur_level = level
         self.level_files_and_dirs = dict()
@@ -49,4 +48,3 @@ class files_detector:
         except PermissionError as e:
             print(f"Error: {e} in {path}. It was ignored")
             self.level_files_and_dirs[path] = f"Error: {e} in {path}. It was ignored"
-

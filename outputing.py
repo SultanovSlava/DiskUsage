@@ -1,9 +1,8 @@
-
 import tabulate
 from datetime import datetime
 
 
-class outputer:
+class Outputer:
     def get_visual_procent(self, procent):
         visual = '['
         sharp_count = int(round(procent // 10))
@@ -29,3 +28,4 @@ class outputer:
                          datetime.fromtimestamp(el.time)])
 
         print(tabulate.tabulate(data))
+        return data

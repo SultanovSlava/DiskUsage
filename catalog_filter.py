@@ -1,6 +1,6 @@
 
 
-class catalog_filter:
+class CatalogFilter:
     def __init__(self, catalog=[]):
         dict_of_catalog = dict()
         for el in catalog:

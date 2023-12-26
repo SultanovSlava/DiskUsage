@@ -1,5 +1,6 @@
-from command_line import command_line
+from command_line import CommandLine
 
+if __name__ == "__main__":
+    CommandLine().run()
 
-s = command_line()
 
